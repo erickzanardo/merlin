@@ -1,4 +1,4 @@
-name: ci
+name: merlin
 
 concurrency:
   group: $-$
