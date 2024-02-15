@@ -1,17 +1,16 @@
 name: merlin
 
 concurrency:
-  group: $-$
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     paths:
       - "packages/merlin/**"
       - ".github/workflows/merlin.yaml"
+    branches:
+      - main
 
 jobs:
   semantic_pull_request:
