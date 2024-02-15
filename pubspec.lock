@@ -131,6 +131,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
+  merlin:
+    dependency: "direct main"
+    description:
+      path: "packages/merlin"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   meta:
     dependency: transitive
     description:
