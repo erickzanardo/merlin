@@ -1,4 +1,4 @@
-name: merlin
+name: merlin_editor
 description: "Create Shmup games with ease with Flutter and Flame"
 
 publish_to: 'none'
@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  merlin:
+    path: packages/merlin
   nes_ui: ^0.15.0
 
 dev_dependencies:
