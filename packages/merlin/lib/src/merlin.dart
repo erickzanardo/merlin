@@ -1,7 +1,1 @@
-/// {@template merlin}
-/// Shmup engine on top of flame engine
-/// {@endtemplate}
-class Merlin {
-  /// {@macro merlin}
-  const Merlin();
-}
+export 'models/models.dart';
