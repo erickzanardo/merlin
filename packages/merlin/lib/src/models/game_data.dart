@@ -15,8 +15,6 @@ class MerlinGameData extends Equatable {
     required this.resolutionWidth,
     required this.resolutionHeight,
     required this.gridSize,
-    required this.scrollSize,
-    required this.scrollingSpeed,
   });
 
   /// Creates a [MerlinGameData] from a JSON map.
@@ -35,12 +33,6 @@ class MerlinGameData extends Equatable {
   /// The size of the grid.
   final int gridSize;
 
-  /// The size of the scroll.
-  final int scrollSize;
-
-  /// The scrolling speed.
-  final double scrollingSpeed;
-
   /// Returns this instance as a JSON map.
   Map<String, dynamic> toJson() => _$MerlinGameDataToJson(this);
 
@@ -50,7 +42,5 @@ class MerlinGameData extends Equatable {
         resolutionWidth,
         resolutionHeight,
         gridSize,
-        scrollSize,
-        scrollingSpeed,
       ];
 }

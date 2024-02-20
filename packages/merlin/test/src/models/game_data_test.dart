@@ -12,8 +12,6 @@ void main() {
           resolutionWidth: 10,
           resolutionHeight: 10,
           gridSize: 10,
-          scrollSize: 10,
-          scrollingSpeed: 10,
         ),
         isA<MerlinGameData>(),
       );
@@ -26,16 +24,12 @@ void main() {
           resolutionWidth: 10,
           resolutionHeight: 10,
           gridSize: 10,
-          scrollSize: 10,
-          scrollingSpeed: 10,
         ).toJson(),
         {
           'name': 'name',
           'resolutionWidth': 10,
           'resolutionHeight': 10,
           'gridSize': 10,
-          'scrollSize': 10,
-          'scrollingSpeed': 10,
         },
       );
     });
@@ -47,16 +41,12 @@ void main() {
           'resolutionWidth': 10,
           'resolutionHeight': 10,
           'gridSize': 10,
-          'scrollSize': 10,
-          'scrollingSpeed': 10,
         }),
         MerlinGameData(
           name: 'name',
           resolutionWidth: 10,
           resolutionHeight: 10,
           gridSize: 10,
-          scrollSize: 10,
-          scrollingSpeed: 10,
         ),
       );
     });
@@ -67,8 +57,6 @@ void main() {
         resolutionWidth: 10,
         resolutionHeight: 10,
         gridSize: 10,
-        scrollSize: 10,
-        scrollingSpeed: 10,
       );
 
       expect(
@@ -79,8 +67,6 @@ void main() {
             resolutionWidth: 10,
             resolutionHeight: 10,
             gridSize: 10,
-            scrollSize: 10,
-            scrollingSpeed: 10,
           ),
         ),
       );
@@ -94,8 +80,6 @@ void main() {
               resolutionWidth: 10,
               resolutionHeight: 10,
               gridSize: 10,
-              scrollSize: 10,
-              scrollingSpeed: 10,
             ),
           ),
         ),
@@ -110,8 +94,6 @@ void main() {
               resolutionWidth: 20,
               resolutionHeight: 10,
               gridSize: 10,
-              scrollSize: 10,
-              scrollingSpeed: 10,
             ),
           ),
         ),
@@ -126,40 +108,6 @@ void main() {
               resolutionWidth: 10,
               resolutionHeight: 20,
               gridSize: 10,
-              scrollSize: 10,
-              scrollingSpeed: 10,
-            ),
-          ),
-        ),
-      );
-
-      expect(
-        instance,
-        isNot(
-          equals(
-            MerlinGameData(
-              name: 'name',
-              resolutionWidth: 10,
-              resolutionHeight: 10,
-              gridSize: 20,
-              scrollSize: 10,
-              scrollingSpeed: 10,
-            ),
-          ),
-        ),
-      );
-
-      expect(
-        instance,
-        isNot(
-          equals(
-            MerlinGameData(
-              name: 'name',
-              resolutionWidth: 10,
-              resolutionHeight: 10,
-              gridSize: 10,
-              scrollSize: 20,
-              scrollingSpeed: 10,
             ),
           ),
         ),
