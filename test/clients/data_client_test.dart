@@ -22,5 +22,24 @@ void main() {
 
       verify(() => mockFile.writeAsString(jsonEncode(json))).called(1);
     });
+
+    test('file', () {
+      final mockFile = _MockFile();
+      final dataClient = DataClient(createFile: (_) => mockFile);
+
+      final file = dataClient.file('test.json');
+
+      expect(file, mockFile);
+    });
+
+    test('directoryPath', () async {
+      final dataClient = DataClient(
+        overrideGetDirectoryPath: () async => 'test',
+      );
+
+      final directoryPath = await dataClient.directoryPath();
+
+      expect(directoryPath, 'test');
+    });
   });
 }
