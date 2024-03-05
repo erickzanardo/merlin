@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:merlin_editor/app/app.dart';
+import 'package:merlin_editor/project/project.dart';
 import 'package:nes_ui/nes_ui.dart';
 
 class AppPage extends StatelessWidget {
@@ -56,7 +57,13 @@ class AppEmptyView extends StatelessWidget {
               ),
               NesButton(
                 type: NesButtonType.normal,
-                onPressed: () {},
+                onPressed: () async {
+                  final cubit = context.read<AppCubit>();
+                  final data = await ProjectForm.show(null, context);
+                  if (data != null) {
+                    await cubit.createProject(data);
+                  }
+                },
                 child: const Text('New Project'),
               ),
             ],

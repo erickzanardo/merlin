@@ -410,10 +410,11 @@ packages:
   nes_ui:
     dependency: "direct main"
     description:
-      name: nes_ui
-      sha256: "16e02d22f3cd2e8b778dea1c791339f13a10c70ed71ec8e3eb105750e4d6e1bd"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "7d298c3f62f5adb565b53cf33699531e5c52cdfc"
+      url: "https://github.com/erickzanardo/nes_ui.git"
+    source: git
     version: "0.18.0"
   nested:
     dependency: transitive

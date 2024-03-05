@@ -35,4 +35,18 @@ class AppCubit extends Cubit<AppState> {
       }
     }
   }
+
+  Future<void> createProject(MerlinGameData data) async {
+    final projectPath = await _dataClient.directoryPath();
+
+    if (projectPath != null) {
+      try {
+        await _gameDataRepository.saveGameData(projectPath, data);
+        emit(LoadedAppState(projectPath: projectPath, gameData: data));
+      } catch (e, s) {
+        addError(e, s);
+        emit(LoadingFailedAppState(error: 'Error creating project: $e'));
+      }
+    }
+  }
 }
