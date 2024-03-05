@@ -98,5 +98,55 @@ void main() {
         ),
       ],
     );
+
+    blocTest<AppCubit, AppState>(
+      'createProject',
+      build: () => AppCubit(
+        dataClient: mockDataClient,
+        gameDataRepository: mockGameDataRepository,
+      ),
+      setUp: () {
+        when(() => mockDataClient.directoryPath()).thenAnswer(
+          (_) async => 'project_path',
+        );
+        when(
+          () => mockGameDataRepository.saveGameData(
+            'project_path',
+            MerlinGameData(
+              name: '',
+              resolutionWidth: 10,
+              resolutionHeight: 10,
+              gridSize: 10,
+            ),
+          ),
+        ).thenAnswer(
+          (_) async => MerlinGameData(
+            name: '',
+            resolutionWidth: 10,
+            resolutionHeight: 10,
+            gridSize: 10,
+          ),
+        );
+      },
+      act: (cubit) => cubit.createProject(
+        MerlinGameData(
+          name: '',
+          resolutionWidth: 10,
+          resolutionHeight: 10,
+          gridSize: 10,
+        ),
+      ),
+      expect: () => [
+        LoadedAppState(
+          projectPath: 'project_path',
+          gameData: MerlinGameData(
+            name: '',
+            resolutionWidth: 10,
+            resolutionHeight: 10,
+            gridSize: 10,
+          ),
+        ),
+      ],
+    );
   });
 }
