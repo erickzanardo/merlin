@@ -12,8 +12,6 @@ MerlinGameData _$MerlinGameDataFromJson(Map<String, dynamic> json) =>
       resolutionWidth: json['resolutionWidth'] as int,
       resolutionHeight: json['resolutionHeight'] as int,
       gridSize: json['gridSize'] as int,
-      scrollSize: json['scrollSize'] as int,
-      scrollingSpeed: (json['scrollingSpeed'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$MerlinGameDataToJson(MerlinGameData instance) =>
@@ -22,6 +20,4 @@ Map<String, dynamic> _$MerlinGameDataToJson(MerlinGameData instance) =>
       'resolutionWidth': instance.resolutionWidth,
       'resolutionHeight': instance.resolutionHeight,
       'gridSize': instance.gridSize,
-      'scrollSize': instance.scrollSize,
-      'scrollingSpeed': instance.scrollingSpeed,
     };
