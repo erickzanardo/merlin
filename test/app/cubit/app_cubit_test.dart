@@ -58,6 +58,15 @@ void main() {
             gridSize: 10,
           ),
         );
+        when(() => mockGameDataRepository.loadGameLevels('project_path'))
+            .thenAnswer(
+          (_) async => const {
+            'level1': MerlinGameLevel(
+              scrollSpeed: 20,
+              scrollLength: 20,
+            ),
+          },
+        );
       },
       act: (cubit) => cubit.loadProject(),
       expect: () => [
@@ -69,7 +78,12 @@ void main() {
             resolutionHeight: 10,
             gridSize: 10,
           ),
-          levels: const {},
+          levels: const {
+            'level1': MerlinGameLevel(
+              scrollSpeed: 20,
+              scrollLength: 20,
+            ),
+          },
         ),
       ],
     );
@@ -87,6 +101,10 @@ void main() {
         when(() => mockGameDataRepository.loadGameData('project_path'))
             .thenAnswer(
           (_) async => null,
+        );
+        when(() => mockGameDataRepository.loadGameLevels('project_path'))
+            .thenAnswer(
+          (_) async => const {},
         );
       },
       act: (cubit) => cubit.loadProject(),
