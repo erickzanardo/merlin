@@ -36,7 +36,7 @@ class SidebarView extends StatelessWidget {
                       ),
                     ],
                     onOpenFile: (entry) {
-                      // TODO(erickzanardo): Open file
+                      context.read<EditorCubit>().openFile(entry.path);
                     },
                   );
                 }
