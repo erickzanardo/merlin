@@ -412,10 +412,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7d298c3f62f5adb565b53cf33699531e5c52cdfc"
+      resolved-ref: "26669506ae81053fdd78ba1e901980ef85a6591e"
       url: "https://github.com/erickzanardo/nes_ui.git"
     source: git
-    version: "0.18.0"
+    version: "0.19.0"
   nested:
     dependency: transitive
     description:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:merlin_editor/app/app.dart';
+import 'package:merlin_editor/editor/editor.dart';
 import 'package:merlin_editor/project/project.dart';
 import 'package:nes_ui/nes_ui.dart';
 
@@ -22,16 +23,18 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appCubit = context.watch<AppCubit>();
-    final state = appCubit.state;
-
-    if (state is LoadedAppState) {
-      return Scaffold(
-        body: Text(state.gameData.name),
-      );
-    } else {
-      return const AppEmptyView();
-    }
+    return BlocListener<AppCubit, AppState>(
+      listenWhen: (previous, current) {
+        return current != previous && current is LoadedAppState;
+      },
+      listener: (BuildContext context, state) {
+        Navigator.pushReplacement(
+          context,
+          EditorPage.route(),
+        );
+      },
+      child: const AppEmptyView(),
+    );
   }
 }
 
