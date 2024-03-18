@@ -26,11 +26,29 @@ class LoadedAppState extends AppState {
   const LoadedAppState({
     required this.projectPath,
     required this.gameData,
+    required this.levels,
   });
 
   final String projectPath;
   final MerlinGameData gameData;
+  final Map<String, MerlinGameLevel> levels;
+
+  LoadedAppState copyWith({
+    String? projectPath,
+    MerlinGameData? gameData,
+    Map<String, MerlinGameLevel>? levels,
+  }) {
+    return LoadedAppState(
+      projectPath: projectPath ?? this.projectPath,
+      gameData: gameData ?? this.gameData,
+      levels: levels ?? this.levels,
+    );
+  }
 
   @override
-  List<Object?> get props => [projectPath, gameData];
+  List<Object?> get props => [
+        projectPath,
+        gameData,
+        levels,
+      ];
 }

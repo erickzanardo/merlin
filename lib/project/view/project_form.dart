@@ -17,6 +17,7 @@ class ProjectForm extends StatefulWidget {
   ) {
     return NesDialog.show<MerlinGameData>(
       context: context,
+      frame: const NesWindowDialogFrame(),
       builder: (context) {
         return ProjectForm(gameData: gameData);
       },

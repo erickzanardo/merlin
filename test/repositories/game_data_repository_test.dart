@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -83,6 +84,44 @@ void main() {
       final gameData = await gameDataRepository.loadGameData(projectPath);
 
       expect(gameData, isNull);
+    });
+
+    test('saveLevel saves a level', () async {
+      final file = _MockFile();
+      when(() => mockDataClient.file(any())).thenReturn(
+        file,
+      );
+      when(file.existsSync).thenReturn(false);
+      when(() => file.create(recursive: any(named: 'recursive'))).thenAnswer(
+        (_) async => file,
+      );
+
+      when(() => file.writeAsString(any())).thenAnswer(
+        (_) async => file,
+      );
+      final gameDataRepository = GameDataRepository(dataClient: mockDataClient);
+
+      const projectPath = 'project_path';
+      const fileName = 'level1';
+      final level = MerlinGameLevel(
+        scrollSpeed: 10,
+        scrollLength: 800,
+      );
+      await gameDataRepository.saveLevel(
+        projectPath: projectPath,
+        fileName: fileName,
+        level: level,
+      );
+
+      verify(
+        () => mockDataClient.file('project_path/levels/level1.merlin_level'),
+      ).called(1);
+      verify(() => file.create(recursive: true)).called(1);
+      verify(
+        () => file.writeAsString(
+          jsonEncode(level.toJson()),
+        ),
+      ).called(1);
     });
   });
 }

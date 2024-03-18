@@ -17,6 +17,23 @@ void main() {
     late DataClient mockDataClient;
     late GameDataRepository mockGameDataRepository;
 
+    setUpAll(() {
+      registerFallbackValue(
+        MerlinGameLevel(
+          scrollSpeed: 0,
+          scrollLength: 0,
+        ),
+      );
+      registerFallbackValue(
+        MerlinGameData(
+          name: '',
+          resolutionWidth: 0,
+          resolutionHeight: 0,
+          gridSize: 0,
+        ),
+      );
+    });
+
     setUp(() {
       mockDataClient = _MockDataClient();
       mockGameDataRepository = _MockGameDataRepository();
@@ -41,6 +58,15 @@ void main() {
             gridSize: 10,
           ),
         );
+        when(() => mockGameDataRepository.loadGameLevels('project_path'))
+            .thenAnswer(
+          (_) async => const {
+            'level1': MerlinGameLevel(
+              scrollSpeed: 20,
+              scrollLength: 20,
+            ),
+          },
+        );
       },
       act: (cubit) => cubit.loadProject(),
       expect: () => [
@@ -52,6 +78,12 @@ void main() {
             resolutionHeight: 10,
             gridSize: 10,
           ),
+          levels: const {
+            'level1': MerlinGameLevel(
+              scrollSpeed: 20,
+              scrollLength: 20,
+            ),
+          },
         ),
       ],
     );
@@ -69,6 +101,10 @@ void main() {
         when(() => mockGameDataRepository.loadGameData('project_path'))
             .thenAnswer(
           (_) async => null,
+        );
+        when(() => mockGameDataRepository.loadGameLevels('project_path'))
+            .thenAnswer(
+          (_) async => const {},
         );
       },
       act: (cubit) => cubit.loadProject(),
@@ -145,6 +181,106 @@ void main() {
             resolutionHeight: 10,
             gridSize: 10,
           ),
+          levels: const {},
+        ),
+      ],
+    );
+
+    blocTest<AppCubit, AppState>(
+      'createProject emit error when an error happens',
+      build: () => AppCubit(
+        dataClient: mockDataClient,
+        gameDataRepository: mockGameDataRepository,
+      ),
+      setUp: () {
+        when(() => mockDataClient.directoryPath()).thenAnswer(
+          (_) async => 'project_path',
+        );
+        when(
+          () => mockGameDataRepository.saveGameData(
+            'project_path',
+            MerlinGameData(
+              name: '',
+              resolutionWidth: 10,
+              resolutionHeight: 10,
+              gridSize: 10,
+            ),
+          ),
+        ).thenThrow(
+          Exception('error'),
+        );
+      },
+      act: (cubit) => cubit.createProject(
+        MerlinGameData(
+          name: '',
+          resolutionWidth: 10,
+          resolutionHeight: 10,
+          gridSize: 10,
+        ),
+      ),
+      expect: () => [
+        const LoadingFailedAppState(
+          error: 'Error creating project: Exception: error',
+        ),
+      ],
+    );
+
+    blocTest<AppCubit, AppState>(
+      'createLevel',
+      build: () => AppCubit(
+        dataClient: mockDataClient,
+        gameDataRepository: mockGameDataRepository,
+      ),
+      setUp: () {
+        when(
+          () => mockGameDataRepository.saveLevel(
+            projectPath: any(named: 'projectPath'),
+            fileName: any(named: 'fileName'),
+            level: any(named: 'level'),
+          ),
+        ).thenAnswer(
+          (_) async => MerlinGameData(
+            name: '',
+            resolutionWidth: 10,
+            resolutionHeight: 10,
+            gridSize: 10,
+          ),
+        );
+      },
+      seed: () => LoadedAppState(
+        projectPath: 'project_path',
+        gameData: MerlinGameData(
+          name: '',
+          resolutionWidth: 10,
+          resolutionHeight: 10,
+          gridSize: 10,
+        ),
+        levels: const {},
+      ),
+      act: (cubit) => cubit.createLevel(
+        (
+          'level',
+          MerlinGameLevel(
+            scrollSpeed: 20,
+            scrollLength: 20,
+          ),
+        ),
+      ),
+      expect: () => [
+        LoadedAppState(
+          projectPath: 'project_path',
+          gameData: MerlinGameData(
+            name: '',
+            resolutionWidth: 10,
+            resolutionHeight: 10,
+            gridSize: 10,
+          ),
+          levels: const {
+            'level': MerlinGameLevel(
+              scrollSpeed: 20,
+              scrollLength: 20,
+            ),
+          },
         ),
       ],
     );

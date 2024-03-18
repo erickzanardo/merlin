@@ -23,11 +23,20 @@ class AppCubit extends Cubit<AppState> {
     if (projectPath != null) {
       try {
         final gameData = await _gameDataRepository.loadGameData(projectPath);
+        final gameLevels = await _gameDataRepository.loadGameLevels(
+          projectPath,
+        );
 
         if (gameData == null) {
           emit(const LoadingFailedAppState(error: 'No game data found'));
         } else {
-          emit(LoadedAppState(projectPath: projectPath, gameData: gameData));
+          emit(
+            LoadedAppState(
+              projectPath: projectPath,
+              gameData: gameData,
+              levels: gameLevels,
+            ),
+          );
         }
       } catch (e, s) {
         addError(e, s);
@@ -42,11 +51,38 @@ class AppCubit extends Cubit<AppState> {
     if (projectPath != null) {
       try {
         await _gameDataRepository.saveGameData(projectPath, data);
-        emit(LoadedAppState(projectPath: projectPath, gameData: data));
+        emit(
+          LoadedAppState(
+            projectPath: projectPath,
+            gameData: data,
+            levels: const {},
+          ),
+        );
       } catch (e, s) {
         addError(e, s);
         emit(LoadingFailedAppState(error: 'Error creating project: $e'));
       }
+    }
+  }
+
+  Future<void> createLevel((String, MerlinGameLevel) level) async {
+    if (state is LoadedAppState) {
+      final loadedState = state as LoadedAppState;
+
+      await _gameDataRepository.saveLevel(
+        projectPath: loadedState.projectPath,
+        fileName: level.$1,
+        level: level.$2,
+      );
+
+      emit(
+        loadedState.copyWith(
+          levels: {
+            ...loadedState.levels,
+            level.$1: level.$2,
+          },
+        ),
+      );
     }
   }
 }
